@@ -1,0 +1,18 @@
+<h1>All Essays</h1>
+
+<% if @scripts.present? %>
+  <ul>
+  <% @scripts.each do |script| %>
+    <li>
+    <%= link_to script.content, script %>
+    </li>
+
+  <% end %>
+</ul>
+<%else%>
+  <h1> No Essay! click below link to write one </h1>
+<%end %>
+
+<%= link_to "Add a new Essay", new_script_path %>
+
+  

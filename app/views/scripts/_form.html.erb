@@ -1,0 +1,27 @@
+  <%= form_with model: @script do |form| %>
+  
+  <%if params[:action].eql?('new')%>
+    <div>
+      <%= form.label :virtual_user, "Enter username" %><br>
+      <%= form.text_area :virtual_user %>
+      <% @script.errors.full_messages_for(:virtual_user).each do |message| %>
+      
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  <%end%>
+
+  <div>
+    <%= form.hidden_field :script_type, value: "essay" %><br>
+    <%= form.label :content, "Write your essay below" %><br>
+    <%= form.text_area :content, size: "100" %>
+    <% @script.errors.full_messages_for(:content).each do |message| %>
+    
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit "Submit your Essay"%>
+  </div>
+<% end %>

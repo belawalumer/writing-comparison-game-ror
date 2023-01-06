@@ -1,0 +1,12 @@
+<h1><%= @script.user.name %></h1>
+<div><%= @script.content %></div>
+<ul>
+  <li><%= link_to "Edit", edit_script_path(@script) %></li>
+  <li><%= link_to "Destroy", script_path(@script), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
+</ul>
+
+<%= link_to "Home", scripts_path%>
+
