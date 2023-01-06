@@ -1,6 +1,8 @@
 class ScriptsController < ApplicationController
 
-  def home 
+  before_action :set_user, only: %i[create]
+
+  def home
   end
 
   def index
@@ -16,14 +18,11 @@ class ScriptsController < ApplicationController
   end
 
   def create
-    user = create_user_for_essay(params[:script][:virtual_user])
-
     @script = Script.new(script_params)
-    @script.user = user
-    
+    @script.user = @user
+
 
     if @script.save
-      default_point_for_essay(@script)
       redirect_to @script
     else
       render :new, status: :unprocessable_entity
@@ -43,7 +42,7 @@ class ScriptsController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
-  
+
   def destroy
     @script = Script.find(params[:id])
     @script.destroy
@@ -56,13 +55,7 @@ class ScriptsController < ApplicationController
       params.require(:script).permit(:script_type, :content)
     end
 
-    def create_user_for_essay(name)
-      User.create!(name: name)
-    end
-
-    def default_point_for_essay(script)
-      Point.create(value: Script::DEFAULT_VALUE, 
-        user_id: script&.user&.id, 
-        script_id: script&.id)
+    def set_user
+      @user = User.create!(name: params[:script][:virtual_user])
     end
 end
